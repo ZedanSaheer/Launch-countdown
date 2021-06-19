@@ -88,15 +88,15 @@
     .container{
       position: absolute;
       top: 20vh;
-      left: 20vw;
+      left: 10vw;
       padding: 20px;
       background:white;
       border-radius: 10px;
     }
     .wrapper{
       display: flex;
-      height: 20vh;
-      width: 60vw;
+      height: 15vh;
+      width: 80vw;
       justify-content: space-around;
       align-items: center;
     }
@@ -104,16 +104,18 @@
       border-right: 1px solid hsl(0, 0%, 59%);
       flex: 1;
       display: flex;
-      justify-content: center;
       align-items: center;
       flex-direction: column;
+      height: 100%;
+      word-break: break-all;
+      padding: 20px;
     }
     .item.four{
       border-right: 0px;
     }
     span{
       color: black;
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
     }
     #location{
@@ -128,7 +130,7 @@
   <div class="form">
     <h1>IP Address Tracker</h1>
     <div class="searchbar">
-      <input type="text" name="text" id="text" placeholder="Enter Your Ip Address or Domain name">
+      <input type="text" name="text" id="text" placeholder="Enter Your Ip Address">
       <button id="button"><img src="images/icon-arrow.svg" alt="arrow icon" id="arrow"></button>
     </div>
   </div>
@@ -136,7 +138,7 @@
     <div class="wrapper">
       <div class="item one">
         <h2>Ip address</h2>
-        <span id="ip_address">8.8.8.8</span>
+        <span id="ip_address">N/A</span>
       </div>
       <div class="item two">
         <h2>location</h2>
