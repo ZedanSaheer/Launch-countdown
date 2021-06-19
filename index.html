@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
   <title>Frontend Mentor | IP Address Tracker</title>
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+</head>
   <style>
    *{
      margin: 0;
@@ -37,7 +38,7 @@
      padding: 20px;
    }
    h1{
-     font-size: 2.5rem;
+     font-size: 2rem;
      color: white;
      font-weight: 500;
    }
@@ -68,9 +69,12 @@
      background: black;
      border: none;
      outline: none;
+     display: flex;
+     justify-content: center;
+     align-items: center;
    }
    #arrow{
-      height: 25px;
+      height: 22px;
       width: 17px;
    }
    #button:hover{
@@ -79,10 +83,11 @@
 
     #mapid {
       height:70vh;
+      z-index: -1;
     }
     .container{
       position: absolute;
-      top: 25vh;
+      top: 20vh;
       left: 20vw;
       padding: 20px;
       background:white;
@@ -90,7 +95,7 @@
     }
     .wrapper{
       display: flex;
-      height: 10vh;
+      height: 20vh;
       width: 60vw;
       justify-content: space-around;
       align-items: center;
@@ -111,6 +116,12 @@
       font-size: 2rem;
       font-weight: 700;
     }
+    #location{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+
   </style>
 </head>
 <body>
@@ -141,6 +152,8 @@
       </div>
     </div>
   </div>
+  <img src="images/icon-location.svg" alt="location" id="location">
   <div id="mapid"></div>
 </body>
+<script src="script.js"></script>
 </html>
