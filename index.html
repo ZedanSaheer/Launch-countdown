@@ -108,7 +108,7 @@
       flex-direction: column;
       height: 100%;
       word-break: break-all;
-      padding: 20px;
+      padding: 50px;
     }
     .item.four{
       border-right: 0px;
@@ -118,21 +118,15 @@
       font-size: 1.5rem;
       font-weight: 700;
     }
-    #location{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-    }
-
   </style>
 </head>
 <body>
   <div class="form">
     <h1>IP Address Tracker</h1>
-    <div class="searchbar">
+      <form action="#" class="searchbar" onsubmit="event.preventDefault()">
       <input type="text" name="text" id="text" placeholder="Enter Your Ip Address">
       <button id="button"><img src="images/icon-arrow.svg" alt="arrow icon" id="arrow"></button>
-    </div>
+    </form>
   </div>
   <div class="container">
     <div class="wrapper">
@@ -154,7 +148,6 @@
       </div>
     </div>
   </div>
-  <img src="images/icon-location.svg" alt="location" id="location">
   <div id="mapid"></div>
 </body>
 <script src="script.js"></script>

@@ -2,36 +2,54 @@ const ipAddressBox = document.getElementById("ip_address");
 const locationBox = document.getElementById("location_address");
 const timeZoneBox = document.getElementById("time_address");
 const ispBox = document.getElementById("isp_address");
-
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
-
 const text = document.getElementById("text");
+const button = document.getElementById("arrow")
 
 displayIpAddress();
-getInfo();
+
+button.addEventListener("click",()=>{
+   if(text.value){
+       checkData(text.value);
+   } else {
+      alert("Enter IP or Domain Correctly");
+   }
+})
 
 async function displayIpAddress() {
     const URL = await fetch("https://api64.ipify.org?format=json");
     const data = await URL.json();
-    const dataIP = await data.ip
+    const dataIP = await data.ip;
+
     text.value = dataIP;
+    checkData(dataIP);
 }
 
-async function getInfo() {
-    const URL = await fetch("https://api64.ipify.org?format=json");
-    const data = await URL.json();
-    const dataIP = await data.ip
-    text.value = dataIP;
-    const geoDetails = `https://geo.ipify.org/api/v1?apiKey=at_1icnPJ2ELVKbDQVkwuiHioomdyRvf&ipAddress=${dataIP}`;
-    const repsonse= await fetch(geoDetails);
-    const finalData = await repsonse.json();
-    console.log(finalData);
+function checkData(inputValue){
+    const input=inputValue;
+    const domainFormat=/^(?!\-)[A-Za-z0-9 \-?]{2,63}\.([a-zA-Z]{2,4})([. a-z]{2,4})?$/;
+    const ipFormat=/^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$/;
+    
+    if(input.match(domainFormat)){
+        getInfo(input,"domain");
+    } else if(input.match(ipFormat)){
+       getInfo(input,"ipAddress");
+    }
+    else{
+        alert("Invalid Ip or Domain Format!")
+    }
+}
 
+async function getInfo(inputValue,inputType) {
+    const geoDetails = `https://geo.ipify.org/api/v1?apiKey=at_1icnPJ2ELVKbDQVkwuiHioomdyRvf&${inputType}=${inputValue}`;
+    const repsonse= await fetch(`${geoDetails}`);
+    const finalData = await repsonse.json();
+    if(finalData.code==422){
+        alert(finalData.messages);
+    }
+    console.log(finalData);
+    
     getBoxDetails(finalData);
+   /*  getMapInfo(finalData); */
 }
 
 function getBoxDetails(finalData){
@@ -45,3 +63,8 @@ function getBoxDetails(finalData){
     locationBox.innerText=locAdd;
     timeZoneBox.innerText=timeAdd;
 }
+
+/* function getMapInfo(finalData){
+    const lat = finalData.location.lat;
+    const lng = finalData.location.lng;
+} */
