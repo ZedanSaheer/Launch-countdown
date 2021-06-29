@@ -8,122 +8,133 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
   <title>Frontend Mentor | IP Address Tracker</title>
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
 </head>
-  <style>
-   *{
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-   }
-   body{
-     font-family: "Rubik",sans-serif;
-     height: 100vh
-   }
-   .form{
-     height:30vh;
-     background: url(images/pattern-bg.png);
-     background-repeat: no-repeat;
-     background-size: cover;
-     display: flex;
-     align-items: center;
-     flex-direction: column;
-     padding: 20px;
-   }
-   h1{
-     font-size: 2rem;
-     color: white;
-     font-weight: 500;
-   }
-   h2{
-     font-size: 1rem;
-     color: hsl(0, 0%, 59%);
-     font-weight: 400;
-     text-transform: uppercase;
-   }
-   .searchbar{
-     display: flex;
-     margin-top: 15px;
-     border-radius: 10px;
-     overflow: hidden;
-   }
-   #text{
-     width: 600px;
-     height: 50px;
-     border: none;
-     outline: none;
-     padding-left: 10px;
-     font-family: "Rubik";
-     font-size: 1rem;
-   }
-   #button{
-     width: 60px;
-     height: 50px;
-     background: black;
-     border: none;
-     outline: none;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-   }
-   #arrow{
-      height: 22px;
-      width: 17px;
-   }
-   #button:hover{
-    background:hsl(0, 0%, 17%)
-   }
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    #mapid {
-      height:70vh;
-      z-index: -1;
-    }
-    .container{
-      position: absolute;
-      top: 20vh;
-      left: 10vw;
-      padding: 20px;
-      background:white;
-      border-radius: 10px;
-    }
-    .wrapper{
-      display: flex;
-      height: 15vh;
-      width: 80vw;
-      justify-content: space-around;
-      align-items: center;
-    }
-    .item{
-      border-right: 1px solid hsl(0, 0%, 59%);
-      flex: 1;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      height: 100%;
-      word-break: break-all;
-      padding: 50px;
-    }
-    .item.four{
-      border-right: 0px;
-    }
-    span{
-      color: black;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-  </style>
+  body {
+    font-family: "Rubik", sans-serif;
+    height: 100vh
+  }
+
+  .form {
+    height: 30vh;
+    background: url(images/pattern-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: white;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 1rem;
+    color: hsl(0, 0%, 59%);
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .searchbar {
+    display: flex;
+    margin-top: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #text {
+    width: 600px;
+    height: 50px;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    font-family: "Rubik";
+    font-size: 1rem;
+  }
+
+  #button {
+    width: 60px;
+    height: 50px;
+    background: black;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #arrow {
+    height: 22px;
+    width: 17px;
+  }
+
+  #button:hover {
+    background: hsl(0, 0%, 17%)
+  }
+
+  #mapid {
+    height: 70vh;
+    z-index: 0;
+  }
+
+  .container {
+    position: absolute;
+    top: 20vh;
+    left: 10vw;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    z-index: 2;
+  }
+
+  .wrapper {
+    display: flex;
+    height: 13vh;
+    width: 80vw;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .item {
+    border-right: 1px solid hsl(0, 0%, 59%);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    word-break: break-all;
+    padding: 0 50px;
+  }
+
+  .item.four {
+    border-right: 0px;
+  }
+
+  p {
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+</style>
 </head>
 <body>
   <div class="form">
     <h1>IP Address Tracker</h1>
-      <form action="#" class="searchbar" onsubmit="event.preventDefault()">
+    <form action="#" class="searchbar" onsubmit="event.preventDefault()">
       <input type="text" name="text" id="text" placeholder="Enter Your Ip Address">
       <button id="button"><img src="images/icon-arrow.svg" alt="arrow icon" id="arrow"></button>
     </form>
@@ -132,23 +143,27 @@
     <div class="wrapper">
       <div class="item one">
         <h2>Ip address</h2>
-        <span id="ip_address">N/A</span>
+        <p id="ip_address">N/A</p>
       </div>
       <div class="item two">
         <h2>location</h2>
-        <span id="location_address">N/A</span>
+        <p id="location_address">N/A</p>
       </div>
       <div class="item three">
-        <h2>time zone</h2>
-        <span id="time_address">N/A</span>
+        <h2>Time</h2>
+        <p id="time_address">N/A</p>
       </div>
       <div class="item four">
         <h2>Isp</h2>
-        <span id="isp_address">N/A</span>
+        <p id="isp_address">N/A</p>
       </div>
     </div>
   </div>
   <div id="mapid"></div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>

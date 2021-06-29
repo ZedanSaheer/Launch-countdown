@@ -1,70 +1,65 @@
-const ipAddressBox = document.getElementById("ip_address");
-const locationBox = document.getElementById("location_address");
-const timeZoneBox = document.getElementById("time_address");
-const ispBox = document.getElementById("isp_address");
-const text = document.getElementById("text");
-const button = document.getElementById("arrow")
+/* `https://ipgeolocation.abstractapi.com/v1/?api_key=9f8ad84b34fd4f60b3de2640038168f5` */
 
-displayIpAddress();
+/* https://geo.ipify.org/api/v1?apiKey=at_H4rEyfLcL1dEupnpCxXIdreIDg1z8&ipAddress=${ip}` */
 
-button.addEventListener("click",()=>{
-   if(text.value){
-       checkData(text.value);
-   } else {
-      alert("Enter IP or Domain Correctly");
-   }
+const ipAddress = document.querySelector("#ip_address");
+const locationAddress = document.querySelector("#location_address");
+const timeAddress = document.querySelector("#time_address");
+const ispAddress = document.querySelector("#isp_address");
+const button = document.querySelector("#button");
+const text = document.querySelector("#text");
+const map = L.map('mapid').setView([51.505, -0.09], 13);
+
+window.onload = async () => {
+    const data = await axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=9f8ad84b34fd4f60b3de2640038168f5`);
+    updateText(data);
+    console.log(data);
+    displayMap(map,
+        data.data.latitude,
+        data.data.longitude,
+        data.data.city,
+        data.data.region);
+}
+
+button.addEventListener('click', async () => {
+    ip = text.value;
+    ipFormat = /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/;
+    if (ip.match(ipFormat)) {
+        const data = await axios.get(`https://geo.ipify.org/api/v1?apiKey=at_1icnPJ2ELVKbDQVkwuiHioomdyRvf&ipAddress=${ip}`);
+        updateTextClick(data);
+        displayMap(map,
+            data.data.location.lat,
+            data.data.location.lng,
+            data.data.location.city,
+            data.data.location.region);
+        ip = "";
+    } else {
+        alert("Please Enter Valid IP Address")
+    }
+
 })
 
-async function displayIpAddress() {
-    const URL = await fetch("https://api64.ipify.org?format=json");
-    const data = await URL.json();
-    const dataIP = await data.ip;
+function displayMap(map, latitude, longitude, city, state) {
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+   tiles.addTo(map);
 
-    text.value = dataIP;
-    checkData(dataIP);
+    const layer = L.marker([latitude, longitude]).addTo(map);
+    map.setView([latitude, longitude], 9);
 }
 
-function checkData(inputValue){
-    const input=inputValue;
-    const domainFormat=/^(?!\-)[A-Za-z0-9 \-?]{2,63}\.([a-zA-Z]{2,4})([. a-z]{2,4})?$/;
-    const ipFormat=/^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$/;
-    
-    if(input.match(domainFormat)){
-        getInfo(input,"domain");
-    } else if(input.match(ipFormat)){
-       getInfo(input,"ipAddress");
-    }
-    else{
-        alert("Invalid Ip or Domain Format!")
-    }
+function updateText(data) {
+    ipAddress.innerText = data.data.ip_address;
+    locationAddress.innerText = data.data.city + "," + data.data.region + "," + data.data.country;
+    timeAddress.innerText = data.data.timezone.current_time;
+    ispAddress.innerText = data.data.connection.isp_name;
 }
+function updateTextClick(data) {
+    ipAddress.innerText = data.data.ip;
+    locationAddress.innerText = data.data.location.city + "," + data.data.location.region + "," + data.data.location.country;
+    timeAddress.innerText = data.data.location.timezone;
+    ispAddress.innerText = data.data.isp;
+    header = document.querySelector(".three h2");
+    header.innerText = "Timezone"
 
-async function getInfo(inputValue,inputType) {
-    const geoDetails = `https://geo.ipify.org/api/v1?apiKey=at_1icnPJ2ELVKbDQVkwuiHioomdyRvf&${inputType}=${inputValue}`;
-    const repsonse= await fetch(`${geoDetails}`);
-    const finalData = await repsonse.json();
-    if(finalData.code==422){
-        alert(finalData.messages);
-    }
-    console.log(finalData);
-    
-    getBoxDetails(finalData);
-   /*  getMapInfo(finalData); */
 }
-
-function getBoxDetails(finalData){
-    const ipAdd=finalData.ip;
-    const ispAdd=finalData.isp;
-    const locAdd=`${finalData.location.city},${finalData.location.country}`;
-    const timeAdd=finalData.location.timezone;
-
-    ipAddressBox.innerText=ipAdd;
-    ispBox.innerText=ispAdd;
-    locationBox.innerText=locAdd;
-    timeZoneBox.innerText=timeAdd;
-}
-
-/* function getMapInfo(finalData){
-    const lat = finalData.location.lat;
-    const lng = finalData.location.lng;
-} */
